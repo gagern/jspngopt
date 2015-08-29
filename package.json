@@ -1,0 +1,40 @@
+{
+  "name": "jspngopt",
+  "version": "0.1.0",
+  "description": "PNG optimizer, similar to optipng",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha --slow 300 && jshint --verbose src/*.js test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagern/jspngopt.git"
+  },
+  "keywords": [
+    "png",
+    "compress",
+    "compression",
+    "file",
+    "size",
+    "minify"
+  ],
+  "author": "Martin von Gagern",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gagern/jspngopt/issues"
+  },
+  "homepage": "https://github.com/gagern/jspngopt#readme",
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5",
+    "pako": "^0.2.7",
+    "should": "^7.1.0",
+    "vendor-icons": "0.3.6"
+  },
+  "dependencies": {
+    "buffer-crc32": "^0.2.5"
+  },
+  "bin": {
+    "jspngopt": "./src/cli.js"
+  }
+}

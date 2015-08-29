@@ -1,0 +1,7 @@
+{
+  "node": true,
+  "futurehostile": true,
+  "latedef": "nofunc",
+  "noarg": true,
+  "strict": true
+}
