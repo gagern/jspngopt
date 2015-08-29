@@ -21,3 +21,5 @@ OptimizerFS.prototype.fileSync = function(path) {
   fs.writeFileSync(path, after);
   return true;
 };
+
+module.exports = OptimizerFS;
