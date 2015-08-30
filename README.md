@@ -4,7 +4,7 @@
 
 [![Travis build status](https://api.travis-ci.org/gagern/jspngopt.svg?branch=master)](https://travis-ci.org/gagern/jspngopt)
 
-`jspngopt` is a too which tries to reduce the file size of a PNG file by
+`jspngopt` is a tool which tries to reduce the file size of a PNG file by
 
 * removing the alpha channel of an opaque image
 * converting a grayscale-only image to a grayscale color mode
@@ -98,12 +98,20 @@ Each parameter combination is described by the following numbers:
   * 2 is `HUFFMANN_ONLY` to not match duplicates at all.
   * 3 is `RLE`, performing only run-length encoding.
   * 4 is `FIXED` uses a fixed Huffmann coding table.
+
   Default: `[0, 1, 2, 3]`.
 
-### Methods
+### Methods of Optimizer instances
 
 #### bufferSync(Buffer) → Buffer
 
 Takes the content of a complete PNG file as input,
 and returns an optimized version on output.
 Will throw an exception in case of an error.
+
+#### fileSync(String) → void
+
+Takes the name of a PNG file which will be read,
+optimized and written to the same location.
+Will throw an exception in case of an error.
+This method is not available in the browserified version.
