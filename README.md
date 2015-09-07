@@ -2,6 +2,7 @@
 
 **PNG optimizer, similar to OptiPNG**
 
+[![npm version](https://img.shields.io/npm/v/jspngopt.svg)](https://www.npmjs.com/package/jspngopt)
 [![Travis build status](https://api.travis-ci.org/gagern/jspngopt.svg?branch=master)](https://travis-ci.org/gagern/jspngopt)
 
 `jspngopt` is a tool which tries to reduce the file size of a PNG file by
