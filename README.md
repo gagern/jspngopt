@@ -71,6 +71,12 @@ It may contain the following elements:
   to `zlib.deflateSync` and which should be used in its stead.
 * **maxIdatLength:** Maximal size of an `IDAT` chunk, defaults to `0x7fffffff`.
   This is the length of the raw data payload, excluding header and checksum.
+* **log:** Function to call when logging output (at `verbosity` > 0).
+  Defaults to `console.log`.
+* **verbosity:** Amount of information printed during processing.
+  The default of 0 avoids all logging.
+  With a setting of 1, the best parameter combination will get printed.
+  At a setting of 2, all the parameter combinations will get printed.
 
 ### Parameters
 

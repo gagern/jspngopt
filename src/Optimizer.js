@@ -26,6 +26,8 @@ function Optimizer(options) {
     strategy: [0, 1, 2, 3],
   }];
 
+  this.verbosity = options.verbosity | 0;
+  this.log = options.log || console.log.bind(console);
   this.reportSuffix = options.fileName ? " " + options.fileName : "";
 }
 
@@ -63,6 +65,7 @@ Optimizer.prototype.compressSync = function(param) {
   var data = this.img.refiltered[param.filter];
   var deflate = this.options.deflateSync || zlib.deflateSync;
   var compressed = deflate(data, opts);
+  this.reportOne(param, this.img, this.img.filtered.length, compressed.length);
   if (compressed.length < this.minSize) {
     this.minSize = compressed.length;
     this.bestData = compressed;
@@ -70,8 +73,14 @@ Optimizer.prototype.compressSync = function(param) {
   }
 };
 
+Optimizer.prototype.reportOne = function(param, inSize, outSize) {
+  if (this.verbosity >= 2)
+    this.log(param + ": " + inSize + " - " + outSize + this.reportSuffix);
+};
+
 Optimizer.prototype.reportBest = function(param, inSize, outSize) {
-  console.log(param + ": " + inSize + " - " + outSize + this.reportSuffix);
+  if (this.verbosity === 1)
+    this.log(param + ": " + inSize + " - " + outSize + this.reportSuffix);
 };
 
 Optimizer.prototype.buildPNG = function() {
