@@ -2,6 +2,7 @@
 
 var zlib = require("zlib");
 
+var Parameters = require("./Parameters");
 var SyncParser = require("./SyncParser");
 
 function Optimizer(options) {
@@ -17,13 +18,15 @@ function Optimizer(options) {
   }
 
   this.matrices = options.matrices || [{
-    filters: [0, 5],
+    filter: [0, 5],
     interlace: [0],
     windowBits: [15],
     level: [9],
     memLevel: [8, 9],
     strategy: [0, 1, 2, 3],
   }];
+
+  this.reportSuffix = options.fileName ? " " + options.fileName : "";
 }
 
 var signature = new Buffer([137, 80, 78, 71, 13, 10, 26, 10]);
@@ -41,35 +44,13 @@ Optimizer.prototype.bufferSync = function(buf) {
   var paramSets = this.paramSets();
   paramSets.forEach(this.compressSync, this);
   var res = this.buildPNG();
+  this.reportBest(this.bestParam, this.img.filtered.length, this.minSize);
   this.img = null;
   return res;
 };
 
 Optimizer.prototype.paramSets = function() {
-  var p = [];
-  this.matrices.forEach(function(m) {
-    m.filters.forEach(function(filter) {
-      m.interlace.forEach(function(interlace) {
-        m.windowBits.forEach(function(windowBits) {
-          m.level.forEach(function(level) {
-            m.memLevel.forEach(function(memLevel) {
-              m.strategy.forEach(function(strategy) {
-                p.push({
-                  filter: filter,
-                  interlace: interlace,
-                  windowBits: windowBits,
-                  level: level,
-                  memLevel: memLevel,
-                  strategy: strategy,
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
-  return p;
+  return Parameters.expand(this.matrices);
 };
 
 Optimizer.prototype.compressSync = function(param) {
@@ -79,7 +60,6 @@ Optimizer.prototype.compressSync = function(param) {
     memLevel: param.memLevel,
     strategy: param.strategy,
   };
-  //console.log(param);
   var data = this.img.refiltered[param.filter];
   var deflate = this.options.deflateSync || zlib.deflateSync;
   var compressed = deflate(data, opts);
@@ -90,7 +70,8 @@ Optimizer.prototype.compressSync = function(param) {
   }
 };
 
-Optimizer.prototype.reportBest = function(param, size) {
+Optimizer.prototype.reportBest = function(param, inSize, outSize) {
+  console.log(param + ": " + inSize + " - " + outSize + this.reportSuffix);
 };
 
 Optimizer.prototype.buildPNG = function() {
