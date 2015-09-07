@@ -32,10 +32,14 @@ Parser.prototype.handle_IHDR = function(buf) {
     filterMethod: buf.readUInt8(19),
     interlaceMethod: buf.readUInt8(20),
   };
-  if ([8].indexOf(hdr.bitDepth) === -1)
+  if ([1, 2, 4, 8, 16].indexOf(hdr.bitDepth) === -1)
     throw Error("Unsupported bit depth: " + hdr.bitDepth);
   if ([0, 2, 3, 4, 6].indexOf(hdr.colorType) === -1)
     throw Error("Unsupported color type: " + hdr.colorType);
+  if ((hdr.colorType & 2) !== 0 && hdr.bitDepth < 8)
+    throw Error("Multi-sample sub-byte images are disallowed");
+  if (hdr.colorType === 3 && hdr.bitDepth > 8)
+    throw Error("Multi-byte palette images are disallowed");
   if (hdr.compressionMethod !== 0)
     throw Error("Unsupported compression method: " + hdr.compressionMethod);
   if (hdr.filterMethod !== 0)
