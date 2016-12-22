@@ -8,7 +8,7 @@ var crc32 = require("buffer-crc32");
 var Optimizer = require("../src/Optimizer");
 
 describe("Optimizer", function() {
-  var path = require.resolve("vendor-icons/dist/64x64/nodejs.png");
+  var path = require.resolve("./test1.png");
   var png = fs.readFileSync(path);
 
   var easyMatrix = [{
@@ -31,8 +31,8 @@ describe("Optimizer", function() {
     var opt = new Optimizer({pako:pako});
     var compressed = opt.bufferSync(png);
     Buffer.isBuffer(compressed).should.be.true();
-    compressed.length.should.equal(3278);
-    crc32(compressed).readUInt32BE(0).should.equal(0xb3d3677a);
+    compressed.length.should.equal(6961);
+    crc32(compressed).readUInt32BE(0).should.equal(0x30a6abe6);
   });
 
   it("will be silent on verbosity == 0", function() {

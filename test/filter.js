@@ -6,8 +6,9 @@ var should = require("should");
 var SyncParser = require("../src/SyncParser");
 
 describe("filters", function() {
-  it("should be reversible", function() {
-    var path = require.resolve("vendor-icons/dist/64x64/nodejs.png");
+
+  function reversible(name) {
+    var path = require.resolve(name);
     var png = fs.readFileSync(path);
     var parser = new SyncParser();
     var img = parser.parse(png);
@@ -21,5 +22,9 @@ describe("filters", function() {
       img.unfilter();
       img.unfiltered.equals(original).should.be.true();
     }
-  });
+  }
+
+  it("should be reversible on true color image",
+     reversible.bind(null, "./test1.png"));
+
 });
