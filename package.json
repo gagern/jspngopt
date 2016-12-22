@@ -26,9 +26,9 @@
   "homepage": "https://github.com/gagern/jspngopt#readme",
   "devDependencies": {
     "jshint": "^2.8.0",
-    "mocha": "^2.2.5",
-    "pako": "^0.2.7",
-    "should": "^7.1.0"
+    "mocha": "^3.2.0",
+    "pako": "^1.0.4",
+    "should": "^11.1.2"
   },
   "dependencies": {
     "buffer-crc32": "^0.2.5"
