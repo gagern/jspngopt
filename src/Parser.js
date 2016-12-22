@@ -36,7 +36,7 @@ Parser.prototype.handle_IHDR = function(buf) {
     throw Error("Unsupported bit depth: " + hdr.bitDepth);
   if ([0, 2, 3, 4, 6].indexOf(hdr.colorType) === -1)
     throw Error("Unsupported color type: " + hdr.colorType);
-  if ((hdr.colorType & 2) !== 0 && hdr.bitDepth < 8)
+  if ([0, 3].indexOf(hdr.colorType) === -1 && hdr.bitDepth < 8)
     throw Error("Multi-sample sub-byte images are disallowed");
   if (hdr.colorType === 3 && hdr.bitDepth > 8)
     throw Error("Multi-byte palette images are disallowed");

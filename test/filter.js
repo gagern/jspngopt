@@ -27,4 +27,7 @@ describe("filters", function() {
   it("should be reversible on true color image",
      reversible.bind(null, "./test1.png"));
 
+  it("should be reversible on indexed image",
+     reversible.bind(null, "./test2.png"));
+
 });
